@@ -524,7 +524,7 @@ const controlRecipes = async ()=>{
         // rendering recipe
         (0, _recipeViewJsDefault.default).render(_modelJs.state.recipe);
     } catch (err) {
-        console.log(err);
+        (0, _recipeViewJsDefault.default).renderError();
     }
 };
 const init = function() {
@@ -2391,6 +2391,7 @@ const loadRecipe = async function(id) {
         console.log(state.recipe);
     } catch (err) {
         console.error(`${err}`);
+        throw err;
     }
 };
 
@@ -2438,6 +2439,8 @@ var _fractyDefault = parcelHelpers.interopDefault(_fracty);
 class RecipeView {
     #parentEl = document.querySelector(".recipe");
     #data;
+    #errMessage = "We could not find the recipe, please try another one!";
+    #successMessage = "";
     render(data) {
         this.#data = data;
         const markup = this.#generateMarkup();
@@ -2450,7 +2453,33 @@ class RecipeView {
       <use href="${(0, _iconsSvgDefault.default)}#icon-loader"></use>
     </svg>
   </div>`;
-        this.#parentEl.innerHTML = "";
+        this.#clear();
+        this.#parentEl.insertAdjacentHTML("afterbegin", markup);
+    }
+    renderError(message = this.#errMessage) {
+        const markup = `
+    <div class="error">
+            <div>
+              <svg>
+                <use href="${(0, _iconsSvgDefault.default)}#icon-alert-triangle"></use>
+              </svg>
+            </div>
+            <p>${message}</p>
+          </div>`;
+        this.#clear();
+        this.#parentEl.insertAdjacentHTML("afterbegin", markup);
+    }
+    renderSuccess(message = this.#successMessage) {
+        const markup = `
+    <div class="message">
+          <div>
+            <svg>
+              <use href="${(0, _iconsSvgDefault.default)}#icon-smile"></use>
+            </svg>
+          </div>
+          <p>${message}</p>
+        </div>`;
+        this.#clear();
         this.#parentEl.insertAdjacentHTML("afterbegin", markup);
     }
      #clear() {
