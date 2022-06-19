@@ -7,6 +7,10 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import { async } from 'regenerator-runtime';
 
+if (module.hot) {
+  module.hot.accept();
+}
+
 const controlRecipes = async () => {
   try {
     const id = window.location.hash.slice(1);
@@ -34,6 +38,7 @@ const conrtolLoadSearch = async function () {
 
     // render search results
     showResultsView.render(model.state.search.results);
+    console.log(model.state.search.results);
   } catch (err) {
     console.log(err);
   }
