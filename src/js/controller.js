@@ -62,7 +62,8 @@ const controlServings = function (newServings) {
   // update the servings in state
   model.updateServings(newServings);
   // update recipe view
-  recipeView.render(model.state.recipe);
+  // recipeView.render(model.state.recipe);
+  recipeView.update(model.state.recipe);
 };
 
 const init = function () {
